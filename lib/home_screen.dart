@@ -72,9 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     Marker(
         markerId: MarkerId('8'),
-        position: LatLng(31.432923405133163, 73.07015091718509),
+        position: LatLng(31.506703612414928, 74.32685589498183),
         infoWindow: InfoWindow(
-          title: 'UAF Clock Tower',
+          title: 'Paklions Cricket Acadamy',
         )
     ),
   ];
@@ -87,16 +87,33 @@ void initState(){
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-   body: GoogleMap(
-     markers: Set<Marker>.of(_marker),
-     mapType: MapType.normal,
-     compassEnabled: true,
-     myLocationEnabled: true,
-     initialCameraPosition: _kGooglePlex,
-     onMapCreated: (GoogleMapController controller){
-_controller.complete(controller);
-     },
+   body: SafeArea(
+     child: GoogleMap(
+       markers: Set<Marker>.of(_marker),
+       mapType: MapType.normal,
+       compassEnabled: true,
+       myLocationEnabled: true,
+       initialCameraPosition: _kGooglePlex,
+       onMapCreated: (GoogleMapController controller){
+     _controller.complete(controller);
+       },
+     ),
    ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.location_disabled_outlined),
+        onPressed: () async{
+          GoogleMapController controller = await _controller.future;
+          controller.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(
+                target: LatLng(31.506703612414928, 74.32685589498183),
+              zoom: 14
+            ),
+          ));
+          setState(() {
+
+          });
+        },
+      ),
     );
   }
 }
