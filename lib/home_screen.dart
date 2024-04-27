@@ -19,11 +19,24 @@ class _HomeScreenState extends State<HomeScreen> {
     zoom: 14.4746,
   );
 
+  List<Marker> _marker = [];
+  List<Marker> _list = const [
+    Marker(
+      markerId: MarkerId('1'),
+      position: LatLng(37.42796133580664, -122.085749655962),
+    )
+  ];
+@override
+void initState(){
+  super.initState();
+  _marker.addAll(_list);
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
    body: GoogleMap(
+     markers: Set<Marker>.of(_marker),
      mapType: MapType.normal,
      compassEnabled: true,
      myLocationEnabled: true,
