@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location_tracking_app/convert_latland_to_adress.dart';
 import 'package:location_tracking_app/home_screen.dart';
 
 void main() {
@@ -12,13 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (context) => ConvertLatLangToAdress(),
+      //   '/second': (context) => HomeScreen(),
+      // },
       title: 'Flutter Demo',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: ConvertLatLangToAdress(),
     );
   }
 }
