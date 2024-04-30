@@ -13,11 +13,14 @@ class GetUserCurrentLocationScreen extends StatefulWidget {
 }
 
 class _GetUserCurrentLocationScreenState extends State<GetUserCurrentLocationScreen> {
+  // controller for google map
   final Completer<GoogleMapController> _controller = Completer();
+  // sets initial camera position
   static const CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(31.610523967649463, 74.38431688828106),
     zoom: 14,
   );
+  // adds marker to show the position
   final List<Marker> _markers =  <Marker>[
     Marker(markerId: MarkerId('1'),
       position: LatLng(31.610523967649463, 74.38431688828106),
@@ -26,6 +29,28 @@ class _GetUserCurrentLocationScreenState extends State<GetUserCurrentLocationScr
       ),
     )
   ];
+
+  loadData(){
+    getUserCurrentLocation().then((value) async {
+      print('my current location');
+      print(value.latitude.toString() + ' ' + value.longitude.toString());
+
+      _markers.add(
+          Marker(markerId: MarkerId('2'),
+              position: LatLng(value.latitude, value.longitude),
+              infoWindow: InfoWindow(
+                  title: 'My Current Locate'
+              )
+          )
+      );
+      CameraPosition cameraPosition = CameraPosition(
+        zoom: 14.0,
+        target: LatLng(value.latitude, value.longitude),
+      );
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    });
+  }
 
   Future<Position> getUserCurrentLocation() async{
     await Geolocator.requestPermission().then((value) {
@@ -38,7 +63,12 @@ class _GetUserCurrentLocationScreenState extends State<GetUserCurrentLocationScr
 
   }
 
-
+@override
+// used init state so that when app opens it will take you to the current position
+void initState(){
+    super.initState();
+    loadData();
+}
 
 
 
