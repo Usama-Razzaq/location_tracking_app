@@ -105,7 +105,7 @@ class _ConvertAddressToLatLngState extends State<ConvertLatLangToAdress> {
     address = "${placemarks.reversed.first.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}, ${placemarks.reversed.last.name}";
     });
     },
-              child: Text('Convert Address to LatLng'),
+              child: Text('Convert LatLng'),
             ),
           ],
         ),
