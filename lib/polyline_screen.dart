@@ -1,22 +1,26 @@
-import 'dart:collection';
 import 'dart:async';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-class PolygoneScrenn extends StatefulWidget {
-  const PolygoneScrenn({super.key});
+
+class PolyLineScreen extends StatefulWidget {
+  const PolyLineScreen({super.key});
 
   @override
-  State<PolygoneScrenn> createState() => _PolygoneScrennState();
+  State<PolyLineScreen> createState() => _PolyLineScreenState();
 }
 
-class _PolygoneScrennState extends State<PolygoneScrenn> {
+class _PolyLineScreenState extends State<PolyLineScreen> {
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition _kGooglePlex = CameraPosition(
-      target: LatLng(31.428956, 73.075258),
+    target: LatLng(31.428956, 73.075258),
     zoom: 14,
   );
+  Set<Polyline> _polyLine ={};
   final Set<Marker> _markers = {};
-  Set<Polygon> _polygone = HashSet<Polygon>();
+  List<String> markerInfo = [
+    ' main gate', 'house no 5 square','kehkshan hall','home science','gp gate','Fatima hall','ayesha hall/babar hall','zainab hall','zero point','market/library','sir syed hall','Fateh hall','U-gate','nifsat','veternery hospita','CABB','Expo chowk','main gate'];
+  List markerID = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
 
   List<LatLng> points = [
     LatLng(31.428956, 73.075258), // main gate
@@ -37,37 +41,54 @@ class _PolygoneScrennState extends State<PolygoneScrenn> {
     LatLng(31.434084, 73.072386),// CABB
     LatLng(31.432389, 73.070658),// Expo chowk
     LatLng(31.428956, 73.075258),// main gate
-
-
   ];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _polygone.add(Polygon(polygonId: PolygonId('1'),
-        points: points,
-    fillColor:Colors.white.withOpacity(0.2),
-      strokeWidth: 4,
-      strokeColor: Colors.deepOrange,
-      geodesic: true,
-    )
-    );
+
+        for(int i = 0; i<markerInfo.length; i++){
+          _markers.add(
+              Marker(markerId: MarkerId(i.toString()),
+                position: points[i],
+                infoWindow: InfoWindow(
+                  title: markerInfo[i],
+                ),
+                icon: BitmapDescriptor.defaultMarker,
+              )
+          );
+        // }
+
+      }
+
+      setState(() {
+
+      });
+
+      _polyLine.add(
+          Polyline(polylineId: PolylineId('1'),
+            points: points,
+            color: Colors.orange,
+          )
+      );
+
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Polygone'),
+        title: Text('Polyline'),
       ),
       body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        myLocationButtonEnabled: true,
-        myLocationEnabled: false,
-        polygons: _polygone,
+        markers: _markers,
         onMapCreated: (GoogleMapController controller){
           _controller.complete(controller);
         },
+        polylines: _polyLine,
+        myLocationEnabled: true,
+        initialCameraPosition: _kGooglePlex,
+        mapType: MapType.normal,
       ),
     );
   }
