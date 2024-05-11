@@ -13,8 +13,8 @@ class PolyLineScreen extends StatefulWidget {
 class _PolyLineScreenState extends State<PolyLineScreen> {
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(31.428956, 73.075258),
-    zoom: 14,
+    target: LatLng(31.432389, 73.070658),
+    zoom: 15,
   );
   Set<Polyline> _polyLine ={};
   final Set<Marker> _markers = {};
@@ -76,19 +76,33 @@ class _PolyLineScreenState extends State<PolyLineScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    var myColor=Color(0xDF3517F1);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Polyline'),
+        title: Text('Location Tracking',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),),
+        centerTitle: true,
+        backgroundColor: myColor,
+
       ),
-      body: GoogleMap(
-        markers: _markers,
-        onMapCreated: (GoogleMapController controller){
-          _controller.complete(controller);
-        },
-        polylines: _polyLine,
-        myLocationEnabled: true,
-        initialCameraPosition: _kGooglePlex,
-        mapType: MapType.normal,
+      body: Column(
+        children: [
+          GoogleMap(
+            markers: _markers,
+            onMapCreated: (GoogleMapController controller){
+              _controller.complete(controller);
+            },
+            polylines: _polyLine,
+            myLocationEnabled: true,
+            initialCameraPosition: _kGooglePlex,
+            mapType: MapType.normal,
+          ),
+          FloatingActionButton(onPressed: (){})
+        ],
       ),
     );
   }

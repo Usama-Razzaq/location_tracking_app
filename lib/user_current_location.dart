@@ -38,6 +38,7 @@ class _GetUserCurrentLocationScreenState extends State<GetUserCurrentLocationScr
       _markers.add(
           Marker(markerId: MarkerId('2'),
               position: LatLng(value.latitude, value.longitude),
+              icon: BitmapDescriptor.defaultMarker,
               infoWindow: InfoWindow(
                   title: 'My Current Locate'
               )

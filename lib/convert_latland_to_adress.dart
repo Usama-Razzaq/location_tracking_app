@@ -69,42 +69,43 @@ class ConvertLatLangToAdress extends StatefulWidget {
 }
 
 class _ConvertAddressToLatLngState extends State<ConvertLatLangToAdress> {
-  String address = ""; // Example address
-  // double latitude = 31.43623932607555;
-  // double longitude = 73.06798242822221;
+  String address = "naseer abad metro station lahore"; // Example address
+  double latitude = 31.43623932607555;
+  double longitude = 73.06798242822221;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Address to LatLng'),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text('Latitude: ${address}'),
-            // Text('Longitude: $longitude'),
+            Text('Latitude: ${latitude}'),
+            Text('Longitude: $longitude'),
             Text(address),
             ElevatedButton(
               // on press function to get coordinates from address
-              // onPressed: () async {
-              //   List<Location> locations = await locationFromAddress(address);
-              //   print(locations);
-              //   setState(() {
-              //     latitude = locations.first.latitude;
-              //     longitude = locations.first.longitude;
-              //
-              //   });
-              // },
+              onPressed: () async {
+                List<Location> locations = await locationFromAddress(address);
+                print(locations);
+                setState(() {
+                  latitude = locations.first.latitude;
+                  longitude = locations.first.longitude;
+
+                });
+              },
 
               // on press function to get address from coordinates
-              onPressed: () async{
-    List<Placemark> placemarks = await placemarkFromCoordinates(31.610523967649463, 74.38431688828106);
-    setState(() {
-    address = "${placemarks.reversed.first.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}, ${placemarks.reversed.last.name}";
-    });
-    },
+    //           onPressed: () async{
+    // List<Placemark> placemarks = await placemarkFromCoordinates(33.6941, 72.9734);
+    // setState(() {
+    // address = "${placemarks.reversed.first.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}, ${placemarks.reversed.last.name}";
+    // });
+    // },
               child: Text('Convert LatLng'),
             ),
           ],
