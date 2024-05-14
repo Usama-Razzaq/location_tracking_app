@@ -15,6 +15,7 @@ class GetUserCurrentLocationScreen extends StatefulWidget {
 class _GetUserCurrentLocationScreenState extends State<GetUserCurrentLocationScreen> {
   // controller for google map
   final Completer<GoogleMapController> _controller = Completer();
+
   // sets initial camera position
   static const CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(31.610523967649463, 74.38431688828106),

@@ -1,7 +1,10 @@
 import 'dart:async';
 // import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'coordinates_screen.dart';
+
 
 class PolyLineScreen extends StatefulWidget {
   const PolyLineScreen({super.key});
@@ -14,7 +17,7 @@ class _PolyLineScreenState extends State<PolyLineScreen> {
   Completer<GoogleMapController> _controller = Completer();
   CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(31.432389, 73.070658),
-    zoom: 15,
+    zoom: 17,
   );
   Set<Polyline> _polyLine ={};
   final Set<Marker> _markers = {};
@@ -89,20 +92,43 @@ class _PolyLineScreenState extends State<PolyLineScreen> {
         backgroundColor: myColor,
 
       ),
-      body: Column(
-        children: [
-          GoogleMap(
-            markers: _markers,
-            onMapCreated: (GoogleMapController controller){
-              _controller.complete(controller);
-            },
-            polylines: _polyLine,
-            myLocationEnabled: true,
-            initialCameraPosition: _kGooglePlex,
-            mapType: MapType.normal,
-          ),
-          FloatingActionButton(onPressed: (){})
-        ],
+      body: GoogleMap(
+        markers: _markers,
+        onMapCreated: (GoogleMapController controller){
+          _controller.complete(controller);
+        },
+        polylines: _polyLine,
+        myLocationEnabled: true,
+        initialCameraPosition: _kGooglePlex,
+        mapType: MapType.normal,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async{
+          // Add your onPressed logic here
+          Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CoordinatesScreen(
+                latitude: position.latitude,
+                longitude: position.longitude,
+              ),
+            ),
+          );
+        },
+        shape: ContinuousRectangleBorder(),
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        constraints: BoxConstraints.tightFor(
+          width: 100.0,
+          height: 50.0,
+        ),
+        tooltip: 'Add',
+        child: Text('Track Location'),
+        elevation: 2.0,
+        backgroundColor: Colors.orange,
       ),
     );
   }
