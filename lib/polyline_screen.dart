@@ -102,33 +102,41 @@ class _PolyLineScreenState extends State<PolyLineScreen> {
         initialCameraPosition: _kGooglePlex,
         mapType: MapType.normal,
       ),
+
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async{
-          // Add your onPressed logic here
-          Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CoordinatesScreen(
-                latitude: position.latitude,
-                longitude: position.longitude,
+      floatingActionButton: Container(
+        width: 100,
+        height: 70,
+        child: FloatingActionButton(
+          onPressed: () async{
+            // Add your onPressed logic here
+            Position position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high,
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CoordinatesScreen(
+                  latitude: position.latitude,
+                  longitude: position.longitude,
+                ),
               ),
-            ),
-          );
-        },
-        shape: ContinuousRectangleBorder(),
-        materialTapTargetSize: MaterialTapTargetSize.padded,
-        // constraints: BoxConstraints.tightFor(
-        //   width: 100.0,
-        //   height: 50.0,
-        // ),
-        tooltip: 'Add',
-        child: Text('Track Location'),
-        elevation: 2.0,
-        backgroundColor: Colors.orange,
+            );
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          materialTapTargetSize: MaterialTapTargetSize.padded,
+          // constraints: BoxConstraints.tightFor(
+          //   width: 100.0,
+          //   height: 50.0,
+          // ),
+          tooltip: 'Add',
+          child: Text('Locate', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
+          elevation: 2.0,
+          backgroundColor: myColor,
+        ),
       ),
     );
   }

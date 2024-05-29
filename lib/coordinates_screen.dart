@@ -32,7 +32,6 @@
 
 ////// new code
 
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -64,7 +63,8 @@ class _CoordinatesScreenState extends State<CoordinatesScreen> {
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks.first;
         setState(() {
-          _address = "${placemark.street}, ${placemark.locality}, ${placemark.country}";
+          _address =
+              "${placemark.street}, ${placemark.locality}, ${placemark.country}";
         });
       }
     } catch (e) {
@@ -77,19 +77,46 @@ class _CoordinatesScreenState extends State<CoordinatesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var myColor = Color(0xDF3517F1);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Address'),
+        title: Text(
+          'Address',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: myColor,
       ),
-      body: Center(
-        child: _address != null
-            ? Text(
-          'Address: $_address',
-          textAlign: TextAlign.center,
-        )
-            : CircularProgressIndicator(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+              child: Container(
+                  height: 50,
+                  width: 300,
+                  alignment: Alignment.center,
+                  child: Text(
+            'Your Current Position',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+          ))),
+          SizedBox(height: 20,),
+          Center(
+            child: _address != null
+                ? Text(
+                    'Address: $_address',
+                    textAlign: TextAlign.center,
+                  )
+                : CircularProgressIndicator(),
+          ),
+        ],
       ),
     );
   }
 }
-
