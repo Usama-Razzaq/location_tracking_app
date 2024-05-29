@@ -4,7 +4,6 @@ import 'package:location_tracking_app/polyline_screen.dart';
 import 'package:location_tracking_app/user_current_location.dart';
 
 import 'convert_latland_to_adress.dart';
-import 'gpt_code.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

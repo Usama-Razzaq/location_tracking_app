@@ -121,10 +121,10 @@ class _PolyLineScreenState extends State<PolyLineScreen> {
         },
         shape: ContinuousRectangleBorder(),
         materialTapTargetSize: MaterialTapTargetSize.padded,
-        constraints: BoxConstraints.tightFor(
-          width: 100.0,
-          height: 50.0,
-        ),
+        // constraints: BoxConstraints.tightFor(
+        //   width: 100.0,
+        //   height: 50.0,
+        // ),
         tooltip: 'Add',
         child: Text('Track Location'),
         elevation: 2.0,
